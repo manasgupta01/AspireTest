@@ -1,47 +1,50 @@
-const fs = require("fs");
+const mongoose = require("mongoose");
+
+// Define the user schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+});
+
+// Create the User model
+const User = mongoose.model("User", userSchema);
 
 class Database {
-  constructor(filePath) {
-    this.filePath = filePath;
-    this.data = [];
-    this.readDataFromFile();
+  constructor() {
+    this.connectToDatabase();
   }
 
-  readDataFromFile() {
-    try {
-      const jsonData = fs.readFileSync(this.filePath, "utf8");
-      this.data = JSON.parse(jsonData);
-    } catch (error) {
-      console.log("Error reading JSON file:", error);
-      this.data = [];
-    }
-  }
-
-  writeDataToFile() {
-    const jsonData = JSON.stringify(this.data, null, 2);
-    fs.writeFileSync(this.filePath, jsonData, "utf8");
+  connectToDatabase() {
+    mongoose
+      .connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log("Connected to MongoDB");
+      })
+      .catch((error) => {
+        console.log("Error connecting to MongoDB:", error);
+      });
   }
 
   getUserByUsername(username) {
-    return this.data.find((user) => user.username === username);
+    return User.findOne({ username: username });
   }
 
   getUserByEmail(email) {
-    return this.data.find((user) => user.email === email);
+    return User.findOne({ email: email });
   }
 
   addUser(user) {
-    this.data.push(user);
-    this.writeDataToFile();
+    const newUser = new User(user);
+    return newUser.save();
   }
 
   updateUser(user) {
-    const index = this.data.findIndex((u) => u.email === user.email);
-    if (index !== -1) {
-      this.data[index] = user;
-      this.writeDataToFile();
-    }
+    return User.findOneAndUpdate({ email: user.email }, user, { new: true });
   }
 }
 
-module.exports = Database;
+module.exports = new Database();

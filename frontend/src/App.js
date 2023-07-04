@@ -23,3 +23,24 @@ function App() {
 }
 
 export default App;
+
+// import React from "react";
+// import RegisterForm from "./components/RegisterForm";
+// import VerifyForm from "./components/VerifyForm";
+// import LoginForm from "./components/LoginForm";
+
+// const App = () => {
+//   return (
+//     <div>
+//       <h1>User Registration</h1>
+//       <RegisterForm />
+//       <hr />
+//       <VerifyForm />
+//       <hr />
+//       <LoginForm />
+//     </div>
+//   );
+// };
+
+// export default App;
+
