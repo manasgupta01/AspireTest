@@ -1,29 +1,18 @@
+require('dotenv').config();
+
 const express = require("express");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const Database = require("./database"); 
 
 const app = express();
 
 // Middleware to parse JSON data
 app.use(express.json());
 
-// In-memory store for registered users
-let users = [];
-
-// JSON file path
-const dbFilePath = "users.json";
-
-// Read data from the JSON file and initialize the users array
-function readDataFromJsonFile() {
-  try {
-    const jsonData = fs.readFileSync(dbFilePath, "utf8");
-    users = JSON.parse(jsonData);
-  } catch (error) {
-    console.log("Error reading JSON file:", error);
-    users = [];
-  }
-}
+// Initialize the database
+const db = new Database("users.json");
 
 // Write data to the JSON file
 function writeDataToJsonFile() {
@@ -48,8 +37,8 @@ function generateOTP() {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "manasgupta7624@gmail.com",
-    pass: "wmurxvmxaonrnwll",
+    user: process.env.EMAIL_USERNAME, // Use environment variable
+    pass: process.env.EMAIL_PASSWORD, // Use environment variable
   },
 });
 
@@ -84,9 +73,7 @@ app.post("/register", (req, res) => {
   }
 
   // Check if username or email already exists
-  const existingUser = users.find(
-    (user) => user.username === username || user.email === email
-  );
+  const existingUser = db.getUserByUsername(username) || db.getUserByEmail(email);
   if (existingUser) {
     return res
       .status(409)
@@ -109,10 +96,10 @@ app.post("/register", (req, res) => {
   };
 
   // Save the user to the in-memory store
-  users.push(user);
+  db.addUser(user);
 
-  // Write data to the JSON file
-  writeDataToJsonFile();
+  // // Write data to the JSON file
+  // writeDataToJsonFile();
 
   // Send email with OTP to the provided email address
   const mailOptions = {
@@ -146,7 +133,7 @@ app.post("/verify", (req, res) => {
   const { email, otp } = req.body;
 
   // Find the user with the provided email address
-  const user = users.find((user) => user.email === email);
+  const user = db.getUserByEmail(email);
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
@@ -161,7 +148,7 @@ app.post("/verify", (req, res) => {
   user.verified = true;
 
   // Write data to the JSON file
-  writeDataToJsonFile();
+  db.updateUser(user);
 
   console.log("User verified successfully:");
   console.log(user);
@@ -179,7 +166,7 @@ app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   // Find the user with the provided username
-  const user = users.find((user) => user.username === username);
+  const user = db.getUserByUsername(username);
 
   // Check if user exist in user.json
   if (!user) {
@@ -217,4 +204,4 @@ app.listen(3000, () => {
 });
 
 // Read data from the JSON file on server startup
-readDataFromJsonFile();
+db.readDataFromFile();
