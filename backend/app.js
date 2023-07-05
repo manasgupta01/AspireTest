@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema({
 // Create the User model
 const User = mongoose.model("User", userSchema);
 
+// Function to generate OTP
 function generateOTP() {
   // Implement your logic to generate a 25-digit alphanumeric OTP here
   // For simplicity, we'll generate a random 25-character string
@@ -63,7 +64,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Register a new user
+/**
+ * Endpoint: /register
+ * Method: POST
+ * Description: Register a new user
+ * Request Body:
+ *   - username: string
+ *   - password: string
+ *   - confirmPassword: string
+ *   - email: string
+ *   - collegeName: string
+ *   - firstName: string
+ *   - lastName: string
+ */
 app.post("/register", async (req, res) => {
   const {
     username,
@@ -131,7 +144,14 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Verify the user with OTP
+/**
+ * Endpoint: /verify
+ * Method: POST
+ * Description: Verify the user with OTP
+ * Request Body:
+ *   - email: string
+ *   - otp: string
+ */
 app.post("/verify", async (req, res) => {
   const { email, otp } = req.body;
 
@@ -162,7 +182,13 @@ app.post("/verify", async (req, res) => {
   }
 });
 
-// Forgot Password - Generate OTP and send email
+/**
+ * Endpoint: /forgotpassword
+ * Method: POST
+ * Description: Forgot Password - Generate OTP and send email
+ * Request Body:
+ *   - email: string
+ */
 app.post("/forgotpassword", (req, res) => {
   const { email } = req.body;
 
@@ -212,15 +238,15 @@ app.post("/forgotpassword", (req, res) => {
     });
 });
 
-// ...
-
-/** Endpoint: /resetpassword
+/**
+ * Endpoint: /resetpassword
  * Method: PUT
  * Description: Reset the user's password using OTP
  * Request Body:
  *   - email: string
  *   - otp: string
  *   - newPassword: string
+ *   - confirmNewPassword: string
  */
 app.put("/resetpassword", (req, res) => {
   const { email, otp, newPassword, confirmNewPassword } = req.body;
@@ -267,7 +293,14 @@ app.put("/resetpassword", (req, res) => {
     });
 });
 
-// Authenticate a user and generate JWT token
+/**
+ * Endpoint: /login
+ * Method: POST
+ * Description: Authenticate a user and generate JWT token
+ * Request Body:
+ *   - username: string
+ *   - password: string
+ */
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -314,4 +347,3 @@ app.post("/login", async (req, res) => {
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
-
