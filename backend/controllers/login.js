@@ -1,8 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const jwtSecretKey = crypto.randomBytes(32).toString("hex");
+const jwtSecretKey = process.env.JWT_SECRET;
 async function loginUser(req, res) {
   const { username, password } = req.body;
 
