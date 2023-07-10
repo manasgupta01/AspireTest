@@ -1,5 +1,11 @@
 const Course = require("../../models/Course");
 
+/**
+ * Retrieve the details of a course using its courseId.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the course details are retrieved.
+ */
 const getCourseDetails = async (req, res) => {
   try {
     // Extract the necessary information from the request URL

@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 
+// Define the user schema
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true },
-  collegeName: { type: String, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  otp: { type: String, required: false },
-  verified: { type: Boolean, default: false },
+  username: { type: String, required: true }, // User's username
+  password: { type: String, required: true }, // User's password
+  email: { type: String, required: true }, // User's email
+  collegeName: { type: String, required: true }, // User's college name
+  firstName: { type: String, required: true }, // User's first name
+  lastName: { type: String, required: true }, // User's last name
+  otp: { type: String, required: false }, // User's one-time password (optional)
+  verified: { type: Boolean, default: false }, // User's verification status
 });
 
 let User;
+
 if (!mongoose.models.User) {
   User = mongoose.model("User", userSchema);
 } else {

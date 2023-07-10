@@ -1,5 +1,12 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+
+/**
+ * Reset the password for a user using the provided email, OTP, and new password.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the password reset is completed.
+ */
 async function resetPassword(req, res) {
   const { email, otp, newPassword, confirmNewPassword } = req.body;
 

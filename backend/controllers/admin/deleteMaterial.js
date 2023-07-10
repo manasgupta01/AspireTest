@@ -1,5 +1,11 @@
 const Course = require("../../models/Course");
 
+/**
+ * Delete a material from a course.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the material is deleted from the course successfully.
+ */
 const deleteMaterial = async (req, res) => {
   const { courseId, materialId } = req.params;
 

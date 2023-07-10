@@ -1,8 +1,11 @@
-// controllers/admin/getEnrolledStudents.js
-
 const Course = require("../../models/Course");
-const User = require("../../models/User");
 
+/**
+ * Get the enrolled students for a course.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the enrolled students are retrieved successfully.
+ */
 const getEnrolledStudents = async (req, res) => {
   const { courseId } = req.params;
 

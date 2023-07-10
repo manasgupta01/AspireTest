@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+  username: { type: String, required: true }, // User's username
+  email: { type: String, required: true }, // User's email
+  password: { type: String, required: true }, // User's password
 });
 
 // Create the User model
@@ -15,6 +15,9 @@ class Database {
     this.connectToDatabase();
   }
 
+  /**
+   * Connects to the MongoDB database.
+   */
   connectToDatabase() {
     mongoose
       .connect(process.env.MONGODB_URI, {
@@ -29,33 +32,42 @@ class Database {
       });
   }
 
+  /**
+   * Retrieves a user by their username.
+   * @param {string} username - The username of the user.
+   * @returns {Promise} A promise that resolves to the user object.
+   */
   getUserByUsername(username) {
     return User.findOne({ username: username });
   }
 
+  /**
+   * Retrieves a user by their email.
+   * @param {string} email - The email of the user.
+   * @returns {Promise} A promise that resolves to the user object.
+   */
   getUserByEmail(email) {
     return User.findOne({ email: email });
   }
 
+  /**
+   * Adds a new user to the database.
+   * @param {object} user - The user object to be added.
+   * @returns {Promise} A promise that resolves to the saved user object.
+   */
   addUser(user) {
     const newUser = new User(user);
     return newUser.save();
   }
 
+  /**
+   * Updates a user in the database.
+   * @param {object} user - The user object to be updated.
+   * @returns {Promise} A promise that resolves to the updated user object.
+   */
   updateUser(user) {
     return User.findOneAndUpdate({ email: user.email }, user, { new: true });
   }
 }
 
 module.exports = new Database();
-
-// \
-// •	/instructors/courses - GET: Get a list of courses assigned to the instructor.
-// •	/instructors/courses/:courseId - GET: Get details of a specific course, including materials and assignments.
-// •	/instructors/courses/:courseId/assignments - POST: Create a new assignment for a course.
-// •	/instructors/courses/:courseId/assignments/:assignmentId - GET: Get details of a specific assignment for a course.
-// •	/instructors/courses/:courseId/assignments/:assignmentId - PUT: Update details of a specific assignment.
-// •	/instructors/courses/:courseId/assignments/:assignmentId - DELETE: Delete a specific assignment.
-// •	/instructors/courses/:courseId/students - GET: Get a list of students enrolled in a course.
-// •	/instructors/courses/:courseId/students/:studentId - GET: Get details of a specific student in a course.
-// •	/instructors/courses/:courseId/students/:studentId/assignments/:assignmentId - GET: Get the student's assignment details.
