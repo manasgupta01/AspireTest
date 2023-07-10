@@ -1,6 +1,11 @@
 const Course = require("../../models/Course");
-const Material = require("../../models/Material");
 
+/**
+ * Update the details of a material within a course.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the material is updated successfully.
+ */
 const updateMaterial = async (req, res) => {
   const { courseId, materialId } = req.params;
   const { name, description, url, filePath } = req.body;

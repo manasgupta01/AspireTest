@@ -2,6 +2,13 @@ const User = require("../models/User");
 const { generateOTP } = require("../utils");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+
+/**
+ * Register a new user with the provided details.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the user registration is completed.
+ */
 const registerUser = async (req, res) => {
   const {
     username,
@@ -30,13 +37,16 @@ const registerUser = async (req, res) => {
         .status(409)
         .json({ message: "Username or email already exists" });
     }
+
+    // Create a transporter for sending emails
     const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
     // Generate OTP
     const otp = generateOTP();
 

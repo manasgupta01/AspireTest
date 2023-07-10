@@ -1,5 +1,11 @@
 const Material = require("../../models/Material");
 
+/**
+ * Retrieve the details of a material using its materialId.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the material details are retrieved.
+ */
 const getMaterialDetails = async (req, res) => {
   try {
     // Extract the materialId from the request parameters

@@ -1,6 +1,11 @@
-const Course =require('../../models/Course');
+const Course = require('../../models/Course');
 
-// Get details of a specific course
+/**
+ * Get details of a specific course.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the course details are retrieved successfully.
+ */
 const getCourse = async (req, res) => {
   try {
     const { courseId } = req.params;

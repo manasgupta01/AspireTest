@@ -1,11 +1,15 @@
-// controllers/admin/addMaterial.js
-
 const Course = require("../../models/Course");
 const Material = require("../../models/Material");
 
+/**
+ * Add a material to a course.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the material is added to the course successfully.
+ */
 const addMaterial = async (req, res) => {
   const { courseId } = req.params;
-  const { name, description,url,filePath } = req.body;
+  const { name, description, url, filePath } = req.body;
 
   try {
     // Find the course
@@ -16,7 +20,7 @@ const addMaterial = async (req, res) => {
     }
 
     // Create a new material
-    const material = new Material({ name, description,url,filePath });
+    const material = new Material({ name, description, url, filePath });
     await material.save();
 
     // Add the material to the course's materials array

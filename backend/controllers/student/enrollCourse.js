@@ -1,7 +1,11 @@
-// controllers/student/enrollStudent.js
-
 const Course = require("../../models/Course");
 
+/**
+ * Enroll a student in a course using their email and the course's courseId.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the student is enrolled successfully.
+ */
 const enrollStudent = async (req, res) => {
   try {
     // Extract the necessary information from the request URL

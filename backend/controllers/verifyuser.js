@@ -1,5 +1,11 @@
 const User = require("../models/User");
 
+/**
+ * Verify a user using the provided email and OTP.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the verification is completed.
+ */
 async function verifyUser(req, res) {
   const { email, otp } = req.body;
 

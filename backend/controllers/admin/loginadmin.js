@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const jwtSecretKey = process.env.JWT_SECRET;
 
+/**
+ * Login an admin user and generate a JWT token.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the admin user is logged in successfully.
+ */
 const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
  
@@ -19,14 +25,12 @@ const loginAdmin = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-       // Create a payload for the JWT token
-      // Generate JWT token
-      const token = jwt.sign({ userId: admin._id, role: admin.role }, jwtSecretKey);
+    // Generate JWT token
+    const token = jwt.sign({ userId: admin._id, role: admin.role }, jwtSecretKey);
 
-
-      console.log("User logged in successfully:");
-      console.log(admin);
-      return res.status(200).json({ token });
+    console.log("Admin logged in successfully:");
+    console.log(admin);
+    return res.status(200).json({ token });
   } catch (error) {
     console.error('Error logging in admin:', error);
     return res.status(500).json({ message: 'Login failed' });

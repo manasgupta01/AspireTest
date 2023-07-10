@@ -1,7 +1,13 @@
 const User = require("../models/User");
-const crypto = require("crypto");
 const { generateOTP } = require("../utils");
 const nodemailer = require("nodemailer");
+
+/**
+ * Send a password reset OTP (One-Time Password) to the user's email address.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the OTP is sent successfully.
+ */
 async function forgotPassword(req, res) {
   const { email } = req.body;
 
@@ -21,20 +27,23 @@ async function forgotPassword(req, res) {
     // Save the updated user to the database
     await user.save();
 
+    // Create a transporter for sending emails
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
     // Send email with OTP to the provided email address
     const mailOptions = {
-      from: "your-email@gmail.com",
+      from: process.env.EMAIL_USERNAME,
       to: email,
       subject: "Password Reset OTP",
       text: `Your OTP for password reset is: ${otp}`,
     };
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
+
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log("Error sending email:", error);

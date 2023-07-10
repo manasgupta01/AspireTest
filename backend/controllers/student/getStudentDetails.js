@@ -1,7 +1,11 @@
-// controllers/student/getStudentDetails.js
-
 const Student = require("../../models/User");
 
+/**
+ * Retrieve details of a student using their email.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the student details are retrieved.
+ */
 const getStudentDetails = async (req, res) => {
   try {
     // Extract the student email from the request parameters

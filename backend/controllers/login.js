@@ -2,6 +2,13 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const jwtSecretKey = process.env.JWT_SECRET;
+
+/**
+ * Login a user with the provided username and password.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} A Promise that resolves when the user login is completed.
+ */
 async function loginUser(req, res) {
   const { username, password } = req.body;
 
