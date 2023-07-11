@@ -18,6 +18,12 @@ const materialSchema = new mongoose.Schema({
     type: String,
     required: true,
   }, // Material file path
+  
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  
 });
 
 // Create the Material model

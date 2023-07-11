@@ -34,9 +34,8 @@ async function loginUser(req, res) {
 
     // Create a payload for the JWT token
     const payload = {
-      username: user.username,
       email: user.email,
-      collegeName: user.collegeName,
+      role:user.role,
     };
 
     // Generate JWT token

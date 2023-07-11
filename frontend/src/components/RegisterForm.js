@@ -1,106 +1,132 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const RegistrationForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [collegeName, setCollegeName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const RegisterForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [collegeName, setCollegeName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleFormSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a user object
-    const user = {
-      username,
-      password,
-      confirmPassword,
-      email,
-      collegeName,
-      firstName,
-      lastName,
-    };
+    // Perform client-side form validation
+    if (!username || !password || !confirmPassword || !email || !collegeName || !firstName || !lastName) {
+      setErrorMessage('Please fill in all fields');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage('Password and confirm password do not match');
+      return;
+    }
 
     try {
-      // Send a POST request to the backend server
-      const response = await axios.post("/register", user);
-      console.log(response.data); // Handle the response data
+      // Make an HTTP POST request to the backend API
+      const response = await axios.post('/register', {
+        username,
+        password,
+        confirmPassword,
+        email,
+        collegeName,
+        firstName,
+        lastName,
+      });
+
+      setSuccessMessage(response.data.message); // User registered successfully
+      setErrorMessage('');
+      // Reset form fields
+      setUsername('');
+      setPassword('');
+      setConfirmPassword('');
+      setEmail('');
+      setCollegeName('');
+      setFirstName('');
+      setLastName('');
     } catch (error) {
       console.error(error);
+      setErrorMessage('Failed to register user');
     }
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Confirm Password:
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Email:
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        College Name:
-        <input
-          type="text"
-          value={collegeName}
-          onChange={(e) => setCollegeName(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        First Name:
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Last Name:
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-      </label>
-      <br />
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <h2>Registration Form</h2>
+      {errorMessage && <p>{errorMessage}</p>}
+      {successMessage && <p>{successMessage}</p>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="collegeName">College Name</label>
+          <input
+            type="text"
+            id="collegeName"
+            value={collegeName}
+            onChange={(e) => setCollegeName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
   );
 };
 
-export default RegistrationForm;
+export default RegisterForm;

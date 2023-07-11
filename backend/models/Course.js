@@ -8,6 +8,10 @@ const courseSchema = new mongoose.Schema({
   courseCode: { type: String, required: true }, // Course code
   materials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Material' }], // Array of material references
   enrolledStudents: [{ type: String, ref: 'User' }], // Array of enrolled student references
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Create the Course model

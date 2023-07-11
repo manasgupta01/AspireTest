@@ -10,6 +10,16 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true }, // User's last name
   otp: { type: String, required: false }, // User's one-time password (optional)
   verified: { type: Boolean, default: false }, // User's verification status
+  isBanned: { type: Boolean, default: false },
+  banExpiration: { type: Date },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },   
+  role: {
+    type: String,
+    default: "student",
+  },
 });
 
 let User;

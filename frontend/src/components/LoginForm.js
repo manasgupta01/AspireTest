@@ -1,49 +1,33 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLoginSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    axios
-      .post("/login", { username, password })
-      .then((response) => {
-        // Handle success response
-        setMessage("User logged in successfully");
-      })
-      .catch((error) => {
-        // Handle error response
-        setMessage("Invalid username or password");
-      });
+    // Implement login logic here
+    // Call the backend API to authenticate the user
   };
 
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleLoginSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 };

@@ -26,7 +26,7 @@ const loginAdmin = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: admin._id, role: admin.role }, jwtSecretKey);
+    const token = jwt.sign({ email:email, role: admin.role }, jwtSecretKey);
 
     console.log("Admin logged in successfully:");
     console.log(admin);
