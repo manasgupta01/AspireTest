@@ -135,7 +135,7 @@ app.post("/login/admin", loginAdmin);
 /**
  * Student part
  */
-
+// Controllers
 const enrollStudent = require("./controllers/student/enrollCourse");
 const getEnrolledCourses = require("./controllers/student/getEnrolledCourses");
 const getCourseDetails = require("./controllers/student/getCourseDetails");

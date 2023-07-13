@@ -36,3 +36,56 @@
     transform: rotate(360deg);
   }
 }
+.register-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  ;
+}
+
+.register-form .form-group {
+  margin-bottom: 20px;
+}
+
+.register-form label {
+  font-weight: bold;
+}
+
+.register-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-left: 40px;
+  display: block;
+}
+
+
+
+
+
+.register-form .btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-form .error-message {
+  color: #dc3545;
+}
+
+.register-form .success-message {
+  color: #28a745;
+}
+

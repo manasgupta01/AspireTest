@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+//import './RegisterForm.css'; // Import custom CSS for styling
+
 
 const RegisterForm = () => {
   const [username, setUsername] = useState('');
@@ -55,75 +57,82 @@ const RegisterForm = () => {
   };
 
   return (
-    <div>
+    <div className="register-form-container">
       <h2>Registration Form</h2>
-      {errorMessage && <p>{errorMessage}</p>}
-      {successMessage && <p>{successMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      <form className="register-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
+            className="form-control"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
+            className="form-control"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
             id="confirmPassword"
+            className="form-control"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
+            className="form-control"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="collegeName">College Name</label>
           <input
             type="text"
             id="collegeName"
+            className="form-control"
             value={collegeName}
             onChange={(e) => setCollegeName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
             id="firstName"
+            className="form-control"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
             id="lastName"
+            className="form-control"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="btn btn-primary">Register</button>
       </form>
     </div>
   );
